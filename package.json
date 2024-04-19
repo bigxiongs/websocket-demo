@@ -1,0 +1,11 @@
+{
+  "name": "socket-demo",
+  "version": "1.0.0",
+  "description": "a server side websocket protocol based on http",
+  "main": "index.js",
+  "scripts": {
+    "run": "node index.js"
+  },
+  "author": "rene",
+  "license": "ISC"
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="connect">connect</button>
+    <button id="disconnect">disconnect</button>
+    <p>status: </p>
+    <p id="status"></p>
+    <script>
+        const btn1 = document.getElementById('connect')
+        const btn2 = document.getElementById('disconnect')
+        btn2.setAttribute("disabled", true)
+        const p = document.getElementById('status')
+        p.innerHTML = "disconnected"
+        let ws
+        btn1.addEventListener('click', () => {
+            ws = new WebSocket('ws://localhost:8000');
+            ws.onopen = function () {
+                p.innerHTML = "connected"
+                btn1.setAttribute("disabled", true)
+                btn2.removeAttribute("disabled")
+                ws.send('hello from client');
+            };
+            ws.onmessage = function (res) {
+                p.innerHTML ="<- " + res.data
+            };
+            ws.onclose = function (evt) {
+                p.innerHTML = "disconnected";
+                btn1.removeAttribute("disabled")
+                btn2.setAttribute("disabled", true)
+            };
+        })
+        btn2.addEventListener('click', () => {
+            ws.close()
+        })
+    </script>
+</body>
+
+</html>
